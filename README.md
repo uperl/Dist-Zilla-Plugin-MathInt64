@@ -20,6 +20,25 @@ in your xs (lib/MyDist.xs):
     
     /* #define MATH_INT64_NATIVE_IF_AVAILABLE */
     #include "math_int64.h"
+    
+    MODULE = MyDist  PACKAGE = MyDist
+    
+    int64_t
+    function_that_returns_64bit_integer()
+    
+    void
+    function_that_takes_64bit_integer(number)
+        int64_t number
+    
+    SV *
+    same_idea_but_with_xs(number
+        SV *sv_number
+      CODE:
+        int64_t native_number = SvI64(sv_number);
+        ...
+        RETVAL = newSVi64(native_number);
+      OUTPUT:
+        RETVAL
 
 See [Math::Int64#C-API](https://metacpan.org/pod/Math::Int64#C-API) for details.
 
@@ -41,10 +60,22 @@ in your Module::Build subclass (inc/MyDist/ModuleBuild.pm):
 [Math::Int64](https://metacpan.org/pod/Math::Int64) provides an API for Perl and XS modules for dealing
 with 64 bit integers.
 
-This plugin imports the C client API from [Math::Int64](https://metacpan.org/pod/Math::Int64) int your
+This plugin imports the C client API from [Math::Int64](https://metacpan.org/pod/Math::Int64) into your
 distribution.  The C client API depends on ppport.h, so make sure
 that you also get that (the easiest way is via the 
 [PPPort plugin](https://metacpan.org/pod/Dist::Zilla::Plugin::PPPort).
+
+This plugin will also create an appropriate `typemap` or update
+an existing `typemap` to automatically support the types `int64_t`
+and `uint64_t` in your XS code.  (You can turn this off by setting
+typemap = 0).
+
+One thing this plugin does NOT do is, it doesn't tell either
+[Module::Build](https://metacpan.org/pod/Module::Build) or [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker) where to find the C
+and XS sources.  One way of doing this would be to create 
+your own [Module::Build](https://metacpan.org/pod/Module::Build) subclass and set the `c_source` attribute
+to where the C header and source code go (see the synopsis above
+as an example).
 
 # ATTRIBUTES
 
@@ -61,15 +92,12 @@ the `ppport.h` file in the same place.
     [MathInt64]
     dir = xs
 
-# TODO
+## typemap
 
-- create a typemap file
-
-    (if it does not already exist in the dist)
-
-- munge existing typemap file
-
-    (to include 64bit types)
+If set to true (the default), then create a typemap
+file if it does not already exist with the appropriate
+typemaps for 64 bit integers, or if a typemap already
+exists, add the 64 bit integer mappings.
 
 # AUTHOR
 

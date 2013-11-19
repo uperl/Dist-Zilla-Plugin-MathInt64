@@ -1,5 +1,6 @@
 Dist::Zilla::File::InMemory
 Dist::Zilla::Role::FileGatherer
+Dist::Zilla::Role::FileMunger
 Dist::Zilla::Role::Plugin
 ExtUtils::MakeMaker
 File::ShareDir
