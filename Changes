@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.02      2013-11-19 12:20:14 -0500
   - create/update typemap
 
 0.01      2013-11-19 10:59:02 -0500
