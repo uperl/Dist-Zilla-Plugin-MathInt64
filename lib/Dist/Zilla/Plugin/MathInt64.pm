@@ -74,6 +74,9 @@ an existing C<typemap> to automatically support the types C<int64_t>
 and C<uint64_t> in your XS code.  (You can turn this off by setting
 typemap = 0).
 
+This plugin will also declare L<Math::Int64> as a prerequisite for
+your distribution.
+
 One thing this plugin does NOT do is, it doesn't tell either
 L<Module::Build> or L<ExtUtils::MakeMaker> where to find the C
 and XS sources.  One way of doing this would be to create 
@@ -108,6 +111,7 @@ exists, add the 64 bit integer mappings.
 with 'Dist::Zilla::Role::Plugin';
 with 'Dist::Zilla::Role::FileGatherer';
 with 'Dist::Zilla::Role::FileMunger';
+with 'Dist::Zilla::Role::PrereqSource';
 
 has dir => (
   is => 'ro',
@@ -240,6 +244,16 @@ sub munge_files
     '';
   
   $typemap->content(join "\n", @preface, 'INPUT', @input, 'OUTPUT', @output);
+}
+
+sub register_prereqs
+{
+  my($self) = @_;
+  
+  $self->zilla->register_prereqs(
+    { type => 'requires', phase => 'runtime' },
+    'Math::Int64' => '0.28',
+  );
 }
 
 1;

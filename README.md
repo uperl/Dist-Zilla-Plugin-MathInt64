@@ -70,6 +70,9 @@ an existing `typemap` to automatically support the types `int64_t`
 and `uint64_t` in your XS code.  (You can turn this off by setting
 typemap = 0).
 
+This plugin will also declare [Math::Int64](https://metacpan.org/pod/Math::Int64) as a prerequisite for
+your distribution.
+
 One thing this plugin does NOT do is, it doesn't tell either
 [Module::Build](https://metacpan.org/pod/Module::Build) or [ExtUtils::MakeMaker](https://metacpan.org/pod/ExtUtils::MakeMaker) where to find the C
 and XS sources.  One way of doing this would be to create 

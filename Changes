@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - add Math::Int64 as a prereq of target dist
 
 0.02      2013-11-19 12:20:14 -0500
   - create/update typemap

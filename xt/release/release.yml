@@ -13,4 +13,4 @@ pod_coverage:
   # format is "Class#method" or "Class", regex allowed
   # for either Class or method.
   private:
-    - Dist::Zilla::Plugin::MathInt64#(gather_files|munge_files)
+    - Dist::Zilla::Plugin::MathInt64#(gather_files|munge_files|register_prereqs)
