@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.03      2013-11-20 10:10:11 -0500
   - add Math::Int64 as a prereq of target dist
 
 0.02      2013-11-19 12:20:14 -0500
