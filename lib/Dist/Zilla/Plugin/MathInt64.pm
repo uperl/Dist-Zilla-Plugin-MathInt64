@@ -35,7 +35,7 @@ in your xs (lib/MyDist.xs):
      int64_t number
  
  SV *
- same_idea_but_with_xs(number
+ same_idea_but_with_xs(sv_number)
      SV *sv_number
    CODE:
      int64_t native_number = SvI64(sv_number);
