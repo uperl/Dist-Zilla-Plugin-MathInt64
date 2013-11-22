@@ -102,6 +102,14 @@ file if it does not already exist with the appropriate
 typemaps for 64 bit integers, or if a typemap already
 exists, add the 64 bit integer mappings.
 
+# BUNDLED SOFTWARE
+
+This distribution comes bundled with C source code placed
+in the public domain by Salvador Fandino.
+
+Thanks to Salvador Fandino for writing [Math::Int64](https://metacpan.org/pod/Math::Int64) and
+providing a XS / C Client API for other distribution authors.
+
 # AUTHOR
 
 Graham Ollis <plicease@cpan.org>
