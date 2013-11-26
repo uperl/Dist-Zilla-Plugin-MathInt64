@@ -2,6 +2,10 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.04      2013-11-26 11:30:32 -0500
+  - documentation improvements
+  - first CPAN release
+
 0.03      2013-11-20 10:10:11 -0500
   - add Math::Int64 as a prereq of target dist
 
