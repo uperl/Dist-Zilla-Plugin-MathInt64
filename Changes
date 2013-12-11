@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - added typemap_path option
+  - switched to Module::Build
 
 0.04      2013-11-26 11:30:32 -0500
   - documentation improvements

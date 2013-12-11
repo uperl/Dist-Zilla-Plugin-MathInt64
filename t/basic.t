@@ -4,7 +4,7 @@ use Test::More 0.88;
 use Test::DZil;
 use Path::Class qw( file dir );
 
-plan tests => 3;
+plan tests => 4;
 
 $ENV{DIST_ZILLA_PLUGIN_MATH64_TEST} = file(__FILE__)->parent->parent->absolute->subdir('share')->stringify;
 
@@ -30,6 +30,28 @@ subtest 'root' => sub {
   ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
   ok grep { $_->name eq 'typemap' } @{ $tzil->files };
+};
+
+subtest 'typemap_path' => sub {
+  plan tests => 3;
+  my $tzil = Builder->from_config(
+    { dist_root => 'corpus/DZT' },
+    {
+      add_files => {
+        'source/dist.ini' => simple_ini(
+          {},
+          # [MathInt64]
+          [ 'MathInt64', => { typemap_path => 'xs/typemap' } ],
+        ),
+      },
+    }
+  );
+
+  $tzil->build;
+
+  ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
+  ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
+  ok grep { $_->name eq 'xs/typemap' } @{ $tzil->files };
 };
 
 subtest 'dir' => sub {

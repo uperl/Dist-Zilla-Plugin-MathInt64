@@ -106,6 +106,11 @@ file if it does not already exist with the appropriate
 typemaps for 64 bit integers, or if a typemap already
 exists, add the 64 bit integer mappings.
 
+=head2 typemap_path
+
+The path to the typemap file (if typemap is true).
+The default is simply 'typemap'.
+
 =head1 BUNDLED SOFTWARE
 
 This distribution comes bundled with C source code placed
@@ -128,6 +133,11 @@ has dir => (
 has typemap => (
   is      => 'ro',
   default => 1,
+);
+
+has typemap_path => (
+  is      => 'ro',
+  default => 'typemap',
 );
 
 has _source_dir => (
@@ -180,14 +190,14 @@ sub gather_files
     );
   }
   
-  unless(grep { $_->name eq 'typemap' } @{ $self->zilla->files })
+  unless(grep { $_->name eq $self->typemap_path } @{ $self->zilla->files })
   {
     if($self->typemap)
     {
       $self->log("create typemap");
       $self->add_file(
         Dist::Zilla::File::InMemory->new(
-          name    => 'typemap',
+          name    => $self->typemap_path,
           content => "\nINPUT\n\nOUTPUT\n\n",
         ),
       );
@@ -201,7 +211,7 @@ sub munge_files
   
   return unless $self->typemap;
   
-  my($typemap) = grep { $_->name eq 'typemap' } @{ $self->zilla->files };
+  my($typemap) = grep { $_->name eq $self->typemap_path } @{ $self->zilla->files };
   
   $self->log("update typemap");
   

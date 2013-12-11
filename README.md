@@ -102,6 +102,11 @@ file if it does not already exist with the appropriate
 typemaps for 64 bit integers, or if a typemap already
 exists, add the 64 bit integer mappings.
 
+## typemap\_path
+
+The path to the typemap file (if typemap is true).
+The default is simply 'typemap'.
+
 # BUNDLED SOFTWARE
 
 This distribution comes bundled with C source code placed
