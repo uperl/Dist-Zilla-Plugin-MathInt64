@@ -2,6 +2,8 @@ package Dist::Zilla::Plugin::MathInt64;
 
 use Moose;
 use Dist::Zilla::File::InMemory;
+use ExtUtils::Typemaps;
+use File::ShareDir qw( dist_dir );
 
 # ABSTRACT: Include the Math::Int64 C client API in your distribution
 # VERSION
@@ -147,14 +149,12 @@ has _source_dir => (
     if(defined $ENV{DIST_ZILLA_PLUGIN_MATH64_TEST})
     {
       require Path::Class::Dir;
-      require File::ShareDir;
       return Path::Class::Dir->new($ENV{DIST_ZILLA_PLUGIN_MATH64_TEST});
     }
     elsif(defined $Dist::Zilla::Plugin::MathInt64::VERSION)
     {
       require Path::Class::Dir;
-      require File::ShareDir;
-      return Path::Class::Dir->new(File::ShareDir::dist_dir('Dist-Zilla-Plugin-MathInt64'));
+      return Path::Class::Dir->new(dist_dir('Dist-Zilla-Plugin-MathInt64'));
     }
     else
     {
@@ -190,18 +190,19 @@ sub gather_files
     );
   }
   
+  return unless $self->typemap;
+  
+  $DB::single = 1;  
+
   unless(grep { $_->name eq $self->typemap_path } @{ $self->zilla->files })
   {
-    if($self->typemap)
-    {
-      $self->log("create typemap");
-      $self->add_file(
-        Dist::Zilla::File::InMemory->new(
-          name    => $self->typemap_path,
-          content => "\nINPUT\n\nOUTPUT\n\n",
-        ),
-      );
-    }
+    $self->log("create " . $self->typemap_path);
+    $self->add_file(
+      Dist::Zilla::File::InMemory->new(
+        name    => $self->typemap_path,
+        content => ExtUtils::Typemaps->new->as_string,
+      ),
+    );
   }
 }
 
@@ -211,57 +212,22 @@ sub munge_files
   
   return unless $self->typemap;
   
-  my($typemap) = grep { $_->name eq $self->typemap_path } @{ $self->zilla->files };
-  
-  $self->log("update typemap");
-  
-  my @preface;
-  my @input;
-  my @output;
-  my $ref = \@preface;
-  
-  foreach my $line (split /\n/, $typemap->content)
-  {
-    if($line =~ /^INPUT\s*$/)
-    {
-      $ref = \@input;
-      next;
-    }
-    elsif($line =~ /^OUTPUT\s*$/)
-    {
-      $ref = \@output;
-      next;
-    }
-    push @$ref, $line;
-  }
+  my($file) = grep { $_->name eq $self->typemap_path } @{ $self->zilla->files };
 
-  for(\@preface, \@input, \@output)
-  { pop @$_ while @$_ > 0 && $_->[-1] =~ /^\s*$/ }
+  unless(defined $file)
+  {
+    $self->log_fatal("unable to find " . $self->typemap_path . " which I should have created, perhaps another plugin pruned it?");
+  }
   
-  push @preface,
-    'int64_t T_INT64', 
-    'uint64_t T_UINT64',
-    '';
-    
-  push @input,
-    '',
-    'T_INT64',
-    '  $var = SvI64($arg);',
-    '',
-    'T_UINT64',
-    '  $var = SvU64($arg);',
-    '';
-  
-  push @output,
-    '',
-    'T_INT64',
-    '  $arg = newSVi64($var);',
-    '',
-    'T_UINT64',
-    '  $arg = newSVu64($var);',
-    '';
-  
-  $typemap->content(join "\n", @preface, 'INPUT', @input, 'OUTPUT', @output);
+  $self->log("update " . $self->typemap_path);
+
+  my $typemap = ExtUtils::Typemaps->new(string => $file->content);
+  $typemap->merge(
+    typemap => ExtUtils::Typemaps->new(
+      string => scalar $self->_source_dir->file('typemap')->slurp,
+    ),
+  );
+  $file->content($typemap->as_string);
 }
 
 sub register_prereqs

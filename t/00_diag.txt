@@ -3,6 +3,7 @@ Dist::Zilla::Role::FileGatherer
 Dist::Zilla::Role::FileMunger
 Dist::Zilla::Role::Plugin
 Dist::Zilla::Role::PrereqSource
+ExtUtils::Typemaps
 File::ShareDir
 Module::Build
 Moose
