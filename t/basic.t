@@ -30,7 +30,7 @@ subtest 'root' => sub {
 
   $tzil->build;
 
-  diag $_->name for @{ $tzil->files };
+  note $_->name for @{ $tzil->files };
 
   ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
@@ -71,7 +71,7 @@ subtest 'merge' => sub {
 
   $tzil->build;
 
-  diag $_->name for @{ $tzil->files };
+  note $_->name for @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
   
