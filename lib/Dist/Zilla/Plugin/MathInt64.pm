@@ -199,8 +199,6 @@ sub gather_files
   
   return unless $self->typemap;
   
-  $DB::single = 1;  
-
   unless(grep { $_->name eq $self->typemap_path } @{ $self->zilla->files })
   {
     $self->log("create " . $self->typemap_path);
