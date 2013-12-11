@@ -113,6 +113,13 @@ exists, add the 64 bit integer mappings.
 The path to the typemap file (if typemap is true).
 The default is simply 'typemap'.
 
+=head1 CAVEATS
+
+This plugin uses L<ExtUtils::Typemaps> to munge the typemaps
+file, which strips any comments from the typemap file, but
+should be semantically identical.  Versions prior to 0.05
+did its own parsing but would retain comments.
+
 =head1 BUNDLED SOFTWARE
 
 This distribution comes bundled with C source code placed
