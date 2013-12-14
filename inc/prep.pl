@@ -2,10 +2,7 @@ use strict;
 use warnings;
 use Path::Class qw( file dir );
 
-foreach my $key (sort keys %ENV)
-{
-  print "$key=$ENV{$key}\n";
-}
+exit if $ENV{TRAVIS_BUILD_ID};
 
 my $src = file(__FILE__)->parent
                         ->parent
