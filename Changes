@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Support Perl 5.8
 
 0.05      2013-12-11 02:47:23 -0500
   - added typemap_path option

@@ -1,6 +1,5 @@
 use strict;
 use warnings;
-use v5.10;
 use Path::Class qw( file dir );
 
 my $src = file(__FILE__)->parent
@@ -16,6 +15,6 @@ my $dst = file(__FILE__)->parent
 foreach my $file ($src->children)
 {
   my $fn = $file->basename;
-  say $fn;
+  print $fn, "\n";
   $dst->file($fn)->spew(scalar $file->slurp);
 }
