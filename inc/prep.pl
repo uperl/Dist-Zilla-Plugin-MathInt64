@@ -2,6 +2,11 @@ use strict;
 use warnings;
 use Path::Class qw( file dir );
 
+foreach my $key (sort keys %ENV)
+{
+  print "$key=$ENV{$key}\n";
+}
+
 my $src = file(__FILE__)->parent
                         ->parent
                         ->parent
