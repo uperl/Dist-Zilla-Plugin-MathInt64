@@ -1,22 +1,38 @@
 use strict;
 use warnings;
-use Path::Class qw( file dir );
+use Config;
 
 exit if $ENV{TRAVIS_BUILD_ID};
 
-my $src = file(__FILE__)->parent
-                        ->parent
-                        ->parent
-                        ->subdir('Math-Int64')
-                        ->subdir('c_api_client')
-                        ->absolute;
-my $dst = file(__FILE__)->parent
-                        ->parent
-                        ->subdir('share');
+system 'git', 'submodule', 'sync';
+die if $?;
 
-foreach my $file ($src->children)
+require Module::CAPIMaker;
+require File::Copy;
+
+require Path::Class::Dir;
+require Path::Class::File;
+
+my $dst_dir = Path::Class::Dir->new->absolute->subdir('share');
+print "dst = $dst_dir\n";
+
+chdir 'inc/Math-Int64';
+system $^X, 'Makefile.PL';
+die if $?;
+system $Config{make}, 'c_api.h';
+die if $?;
+
+foreach my $src (map { Path::Class::File->new( 'c_api_client', $_ ) } qw( perl_math_int64.c perl_math_int64.h ))
 {
-  my $fn = $file->basename;
-  print $fn, "\n";
-  $dst->file($fn)->spew(scalar $file->slurp);
+  my $dst = $dst_dir->file($src->basename);
+  print "% cp $src $dst\n";
+  File::Copy::copy($src, $dst) || die "unable to copy: $!";
 }
+
+unlink 'c_api.h';
+unlink 'c_api_client/perl_math_int64.c';
+unlink 'c_api_client/perl_math_int64.h';
+unlink 'c_api_client/sample.xs';
+
+system $Config{make}, 'distclean';
+die if $?;
