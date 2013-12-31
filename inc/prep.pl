@@ -4,6 +4,14 @@ use Config;
 
 exit if $ENV{TRAVIS_BUILD_ID};
 
+unless(-e 'inc/Math-Int64/Makefile.PL')
+{
+  system 'git', 'submodule', 'init';
+  die if $?;
+  system 'git', 'submodule', 'update';
+  die if $?;
+}
+
 system 'git', 'submodule', 'sync';
 die if $?;
 
