@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.06      2013-12-31 12:30:02 -0500
   - Support Perl 5.8
   - add optional header perl_math_int64_types.h for int64_t and uint64_t where they aren't otherwise provided
 
