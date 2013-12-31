@@ -24,8 +24,12 @@ in your xs (lib/MyDist.xs):
  #include "XSUB.h"
  #include "ppport.h"
  
+ /* provides int64_t and uint64_t if not   *
+  * already available                      */
+ #include "perl_math_int64_types.h"
+ 
  /* #define MATH_INT64_NATIVE_IF_AVAILABLE */
- #include "math_int64.h"
+ #include "perl_math_int64.h"
  
  MODULE = MyDist  PACKAGE = MyDist
  
@@ -182,7 +186,7 @@ sub gather_files
 {
   my($self) = @_;
   
-  foreach my $source_name (qw( perl_math_int64.c  perl_math_int64.h ))
+  foreach my $source_name (qw( perl_math_int64.c  perl_math_int64.h perl_math_int64_types.h ))
   {
     my $dst = defined $self->dir
     ? join('/', $self->dir, $source_name)

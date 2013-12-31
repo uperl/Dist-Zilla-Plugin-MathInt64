@@ -12,7 +12,7 @@ $ENV{DIST_ZILLA_PLUGIN_MATH64_TEST} = file(__FILE__)->parent->parent->absolute->
 note "share = $ENV{DIST_ZILLA_PLUGIN_MATH64_TEST}";
 
 subtest 'root' => sub {
-  plan tests => 9;
+  plan tests => 10;
   my $tzil = Builder->from_config(
     { dist_root => 'corpus/DZT' },
     {
@@ -34,6 +34,7 @@ subtest 'root' => sub {
 
   ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
+  ok grep { $_->name eq 'perl_math_int64_types.h' } @{ $tzil->files };
   
   my($file) = grep { $_->name eq 'typemap' } @{ $tzil->files };
   
@@ -53,7 +54,7 @@ subtest 'root' => sub {
 };
 
 subtest 'merge' => sub {
-  plan tests => 14;
+  plan tests => 15;
   my $tzil = Builder->from_config(
     { dist_root => 'corpus/DZT2' },
     {
@@ -74,6 +75,7 @@ subtest 'merge' => sub {
   note $_->name for @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
+  ok grep { $_->name eq 'perl_math_int64_types.h' } @{ $tzil->files };
   
   my($file) = grep { $_->name eq 'typemap' } @{ $tzil->files };
   
@@ -99,7 +101,7 @@ subtest 'merge' => sub {
 };
 
 subtest 'typemap_path' => sub {
-  plan tests => 9;
+  plan tests => 10;
   my $tzil = Builder->from_config(
     { dist_root => 'corpus/DZT' },
     {
@@ -119,6 +121,7 @@ subtest 'typemap_path' => sub {
 
   ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
+  ok grep { $_->name eq 'perl_math_int64_types.h' } @{ $tzil->files };
 
   my($file) = grep { $_->name eq 'xs/typemap' } @{ $tzil->files };
 
@@ -138,7 +141,7 @@ subtest 'typemap_path' => sub {
 };
 
 subtest 'dir' => sub {
-  plan tests => 9;
+  plan tests => 10;
   my $tzil = Builder->from_config(
     { dist_root => 'corpus/DZT' },
     {
@@ -159,6 +162,7 @@ subtest 'dir' => sub {
 
   ok grep { $_->name eq 'xs/perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'xs/perl_math_int64.h' } @{ $tzil->files };
+  ok grep { $_->name eq 'xs/perl_math_int64_types.h' } @{ $tzil->files };
 
   my($file) = grep { $_->name eq 'typemap' } @{ $tzil->files };
 
@@ -178,7 +182,7 @@ subtest 'dir' => sub {
 };
 
 subtest 'no typemap' => sub {
-  plan tests => 3;
+  plan tests => 4;
   my $tzil = Builder->from_config(
     { dist_root => 'corpus/DZT' },
     {
@@ -198,5 +202,6 @@ subtest 'no typemap' => sub {
 
   ok grep { $_->name eq 'perl_math_int64.c' } @{ $tzil->files };
   ok grep { $_->name eq 'perl_math_int64.h' } @{ $tzil->files };
+  ok grep { $_->name eq 'perl_math_int64_types.h' } @{ $tzil->files };
   ok ! grep { $_->name eq 'typemap' } @{ $tzil->files };
 };

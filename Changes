@@ -2,6 +2,7 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
   - Support Perl 5.8
+  - add optional header perl_math_int64_types.h for int64_t and uint64_t where they aren't otherwise provided
 
 0.05      2013-12-11 02:47:23 -0500
   - added typemap_path option
