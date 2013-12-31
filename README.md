@@ -1,4 +1,4 @@
-# Dist::Zilla::Plugin::MathInt64
+# Dist::Zilla::Plugin::MathInt64 [![Build Status](https://secure.travis-ci.org/plicease/Dist-Zilla-Plugin-MathInt64.png)](http://travis-ci.org/plicease/Dist-Zilla-Plugin-MathInt64)
 
 Include the Math::Int64 C client API in your distribution
 
