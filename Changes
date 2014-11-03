@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - update API to Math::Int64 0.34 (now includes sv_seti64 and sv_setu64 macros)
 
 0.06      2013-12-31 12:30:02 -0500
   - Support Perl 5.8
