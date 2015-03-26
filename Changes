@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Make Path::Class an explicit requirement
 
 0.07      2014-11-03 05:59:25 -0500
   - update API to Math::Int64 0.34 (now includes sv_seti64 and sv_setu64 macros)
