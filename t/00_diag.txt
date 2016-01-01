@@ -1,7 +1,0 @@
-Dist::Zilla
-ExtUtils::Typemaps
-File::ShareDir
-Module::Build
-Moose
-Path::Class
-Test::More
