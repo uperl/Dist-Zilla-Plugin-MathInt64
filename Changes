@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - update API to Math::Int64 0.53
 
 0.08      2015-03-25 21:36:14 -0400
   - Make Path::Class an explicit requirement
