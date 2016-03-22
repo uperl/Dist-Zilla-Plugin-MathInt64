@@ -128,7 +128,7 @@ providing a XS / C Client API for other distribution authors.
 
 # AUTHOR
 
-Graham Ollis &lt;plicease@cpan.org>
+Graham Ollis <plicease@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
