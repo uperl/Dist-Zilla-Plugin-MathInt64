@@ -3,7 +3,6 @@ package Dist::Zilla::Plugin::MathInt64;
 use Moose;
 use Dist::Zilla::File::InMemory;
 use ExtUtils::Typemaps;
-use File::ShareDir qw( dist_dir );
 
 # ABSTRACT: Include the Math::Int64 C client API in your distribution
 # VERSION
@@ -153,39 +152,27 @@ has typemap_path => (
   default => 'typemap',
 );
 
+
+use constant _source_dir_default => do {
+  require File::ShareDir::Dist;
+  require Path::Class::Dir;
+  my $dir = Path::Class::Dir->new(File::ShareDir::Dist::dist_share('Dist-Zilla-Plugin-MathInt64'));
+  print "pwd = @{[ `pwd` ]}\n";
+  print "dir = $dir\n";
+  $dir;
+};
+
 has _source_dir => (
   is      => 'ro',
   lazy    => 1,
-  default => sub {
-    if(defined $ENV{DIST_ZILLA_PLUGIN_MATH64_TEST})
-    {
-      require Path::Class::Dir;
-      return Path::Class::Dir->new($ENV{DIST_ZILLA_PLUGIN_MATH64_TEST});
-    }
-    elsif(defined $Dist::Zilla::Plugin::MathInt64::VERSION)
-    {
-      require Path::Class::Dir;
-      return Path::Class::Dir->new(dist_dir('Dist-Zilla-Plugin-MathInt64'));
-    }
-    else
-    {
-      require Path::Class::File;
-      return Path::Class::File->new(__FILE__)
-        ->parent
-        ->parent
-        ->parent
-        ->parent
-        ->parent
-        ->absolute
-        ->subdir('share');
-    }
-  },
+  default => \&_source_dir_default,
 );
 
 sub gather_files
 {
   my($self) = @_;
   
+  $DB::single = 1;
   foreach my $source_name (qw( perl_math_int64.c  perl_math_int64.h perl_math_int64_types.h ))
   {
     my $dst = defined $self->dir

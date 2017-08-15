@@ -12,14 +12,17 @@ my $post_diag;
 $modules{$_} = $_ for qw(
   Dist::Zilla
   ExtUtils::Typemaps
-  File::ShareDir
+  File::ShareDir::Dist
   Module::Build
   Moose
   Path::Class
   Test::More
 );
 
-
+$post_diag = sub {
+  require Dist::Zilla::Plugin::MathInt64;
+  diag 'default _source_dir = ', Dist::Zilla::Plugin::MathInt64->_source_dir_default;
+};
 
 my @modules = sort keys %modules;
 

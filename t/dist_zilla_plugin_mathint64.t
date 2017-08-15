@@ -2,14 +2,10 @@ use strict;
 use warnings;
 use Test::More 0.88;
 use Test::DZil;
-use Path::Class qw( file dir );
 use ExtUtils::Typemaps;
+use Dist::Zilla::Plugin::MathInt64;
 
-plan tests => 5;
-
-$ENV{DIST_ZILLA_PLUGIN_MATH64_TEST} = file(__FILE__)->parent->parent->absolute->subdir('share')->stringify;
-
-note "share = $ENV{DIST_ZILLA_PLUGIN_MATH64_TEST}";
+note 'default _source_dir = ', Dist::Zilla::Plugin::MathInt64->_source_dir_default;
 
 subtest 'root' => sub {
   plan tests => 10;
@@ -205,3 +201,5 @@ subtest 'no typemap' => sub {
   ok grep { $_->name eq 'perl_math_int64_types.h' } @{ $tzil->files };
   ok ! grep { $_->name eq 'typemap' } @{ $tzil->files };
 };
+
+done_testing;

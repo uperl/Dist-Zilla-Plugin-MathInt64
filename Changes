@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - Migrate from File::ShareDir to File::ShareDir::Dist
 
 0.09      2016-01-01 07:50:25 -0500
   - update API to Math::Int64 0.53
