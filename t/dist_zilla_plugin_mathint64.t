@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use 5.014;
 use Test::More 0.88;
 use Test::DZil;
 use ExtUtils::Typemaps;
