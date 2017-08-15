@@ -155,11 +155,8 @@ providing a XS / C Client API for other distribution authors.
 
   use constant _source_dir_default => do {
     require File::ShareDir::Dist;
-    require Path::Class::Dir;
-    my $dir = Path::Class::Dir->new(File::ShareDir::Dist::dist_share('Dist-Zilla-Plugin-MathInt64'));
-    print "pwd = @{[ `pwd` ]}\n";
-    print "dir = $dir\n";
-    $dir;
+    require Path::Tiny;
+    Path::Tiny->new(File::ShareDir::Dist::dist_share('Dist-Zilla-Plugin-MathInt64'));
   };
 
   has _source_dir => (
@@ -182,7 +179,7 @@ providing a XS / C Client API for other distribution authors.
       $self->add_file(
         Dist::Zilla::File::InMemory->new(
           name    => $dst,
-          content => scalar $self->_source_dir->file($source_name)->slurp,
+          content => $self->_source_dir->child($source_name)->slurp,
         ),
       );
     }
@@ -219,7 +216,7 @@ providing a XS / C Client API for other distribution authors.
     my $typemap = ExtUtils::Typemaps->new(string => $file->content);
     $typemap->merge(
       typemap => ExtUtils::Typemaps->new(
-        string => scalar $self->_source_dir->file('typemap')->slurp,
+        string => $self->_source_dir->child('typemap')->slurp,
       ),
     );
     $file->content($typemap->as_string);

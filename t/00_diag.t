@@ -15,7 +15,7 @@ $modules{$_} = $_ for qw(
   File::ShareDir::Dist
   Module::Build
   Moose
-  Path::Class
+  Path::Tiny
   Test::More
 );
 
