@@ -11,9 +11,10 @@ my $post_diag;
 
 $modules{$_} = $_ for qw(
   Dist::Zilla
+  ExtUtils::MakeMaker
   ExtUtils::Typemaps
   File::ShareDir::Dist
-  Module::Build
+  File::ShareDir::Install
   Moose
   Path::Tiny
   Test2::V0
