@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.10      2017-08-15 16:56:20 -0400
   - Internally migrate from File::ShareDir to File::ShareDir::Dist
   - Require Dist::Zilla 6.00 Perl 5.14
   - Internally migrate from Path::Class to Path::Tiny
