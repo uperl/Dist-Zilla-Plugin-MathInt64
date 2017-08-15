@@ -1,7 +1,5 @@
-use strict;
-use warnings;
 use 5.014;
-use Test::More 0.88;
+use Test2::V0 -no_srand => 1;
 use Test::DZil;
 use ExtUtils::Typemaps;
 use Dist::Zilla::Plugin::MathInt64;
