@@ -1,4 +1,4 @@
-# Dist::Zilla::Plugin::MathInt64 [![Build Status](https://secure.travis-ci.org/plicease/Dist-Zilla-Plugin-MathInt64.png)](http://travis-ci.org/plicease/Dist-Zilla-Plugin-MathInt64)
+# Dist::Zilla::Plugin::MathInt64 ![linux](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/linux/badge.svg) ![macos](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/macos/badge.svg) ![windows](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/windows/badge.svg) ![cygwin](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/cygwin/badge.svg) ![msys2-mingw](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/msys2-mingw/badge.svg)
 
 Include the Math::Int64 C client API in your distribution
 
@@ -6,58 +6,64 @@ Include the Math::Int64 C client API in your distribution
 
 in your dist.ini
 
-    [PPPort]
-    [MathInt64]
-    [ModuleBuild]
-    mb_class = MyDist::ModuleBuild
+```
+[PPPort]
+[MathInt64]
+[ModuleBuild]
+mb_class = MyDist::ModuleBuild
+```
 
 in your xs (lib/MyDist.xs):
 
-    #include "EXTERN.h"
-    #include "perl.h"
-    #include "XSUB.h"
-    #include "ppport.h"
-    
-    /* provides int64_t and uint64_t if not   *
-     * already available                      */
-    #include "perl_math_int64_types.h"
-    
-    /* #define MATH_INT64_NATIVE_IF_AVAILABLE */
-    #include "perl_math_int64.h"
-    
-    MODULE = MyDist  PACKAGE = MyDist
-    
-    int64_t
-    function_that_returns_64bit_integer()
-    
-    void
-    function_that_takes_64bit_integer(number)
-        int64_t number
-    
-    SV *
-    same_idea_but_with_xs(sv_number)
-        SV *sv_number
-      CODE:
-        int64_t native_number = SvI64(sv_number);
-        ...
-        RETVAL = newSVi64(native_number);
-      OUTPUT:
-        RETVAL
+```
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+#include "ppport.h"
+
+/* provides int64_t and uint64_t if not   *
+ * already available                      */
+#include "perl_math_int64_types.h"
+
+/* #define MATH_INT64_NATIVE_IF_AVAILABLE */
+#include "perl_math_int64.h"
+
+MODULE = MyDist  PACKAGE = MyDist
+
+int64_t
+function_that_returns_64bit_integer()
+
+void
+function_that_takes_64bit_integer(number)
+    int64_t number
+
+SV *
+same_idea_but_with_xs(sv_number)
+    SV *sv_number
+  CODE:
+    int64_t native_number = SvI64(sv_number);
+    ...
+    RETVAL = newSVi64(native_number);
+  OUTPUT:
+    RETVAL
+```
 
 See [Math::Int64#C-API](https://metacpan.org/pod/Math::Int64#C-API) for details.
 
 in your Module::Build subclass (inc/MyDist/ModuleBuild.pm):
 
-    package MyDist::ModuleBuild;
-    
-    use base qw( Module::Build );
-    
-    sub new
-    {
-      my($class, %args) = @_;
-      $args{c_source} = '.';
-      $class->SUPER::new(%args);
-    }
+```perl
+package MyDist::ModuleBuild;
+
+use base qw( Module::Build );
+
+sub new
+{
+  my($class, %args) = @_;
+  $args{c_source} = '.';
+  $class->SUPER::new(%args);
+}
+```
 
 # DESCRIPTION
 
@@ -94,10 +100,12 @@ If you use this option you probably need to tell the
 [PPPort plugin](https://metacpan.org/pod/Dist::Zilla::Plugin::PPPort) to put
 the `ppport.h` file in the same place.
 
-    [PPPort]
-    filename = xs/ppport.h
-    [MathInt64]
-    dir = xs
+```
+[PPPort]
+filename = xs/ppport.h
+[MathInt64]
+dir = xs
+```
 
 ## typemap
 
