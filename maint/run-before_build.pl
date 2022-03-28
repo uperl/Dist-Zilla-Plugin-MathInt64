@@ -10,8 +10,11 @@ unless(-e 'inc/Math-Int64/Makefile.PL')
   die if $?;
 }
 
-system 'git', 'submodule', 'sync';
-die if $?;
+unless($ENV{CIPSOMETHING})
+{
+  system 'git', 'submodule', 'sync';
+  die if $?;
+}
 
 require Module::CAPIMaker;
 require File::Copy;
