@@ -1,4 +1,4 @@
-# Dist::Zilla::Plugin::MathInt64 ![windows](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/windows/badge.svg)
+# Dist::Zilla::Plugin::MathInt64 ![static](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/static/badge.svg) ![linux](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/linux/badge.svg) ![windows](https://github.com/uperl/Dist-Zilla-Plugin-MathInt64/workflows/windows/badge.svg)
 
 Include the Math::Int64 C client API in your distribution
 
