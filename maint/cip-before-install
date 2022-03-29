@@ -5,7 +5,7 @@ set -ex
 cip sudo apt-get update
 cip sudo apt-get install git
 
-ls -alR
 git submodule init
+ls -alR inc/Math-Int64
 git submodule update
 git submodule sync
