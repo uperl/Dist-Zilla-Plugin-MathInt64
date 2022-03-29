@@ -53,6 +53,7 @@ jobs:
 
       - name: Start-Container
         run: |
+          sudo chown -R runner .
           cip start
 
       - name: Diagnostics

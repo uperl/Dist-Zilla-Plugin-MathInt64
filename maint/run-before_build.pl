@@ -6,13 +6,9 @@ unless(-e 'inc/Math-Int64/Makefile.PL')
 {
   system 'git', 'submodule', 'init';
   die if $?;
-  system 'git', 'submodule', 'update';
-  die if $?;
-}
-
-unless($ENV{CIPSOMETHING})
-{
   system 'git', 'submodule', 'sync';
+  die if $?;
+  system 'git', 'submodule', 'update';
   die if $?;
 }
 
