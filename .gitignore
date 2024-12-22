@@ -2,3 +2,5 @@
 /.build
 /share/perl_math_int64.h
 /share/perl_math_int64.c
+*.old
+*.orig
